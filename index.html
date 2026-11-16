@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FOKUS — карточные фокусы с нуля</title>
+<meta name="description" content="Личный курс карточных фокусов: видеоуроки, прогресс, уровни">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🂡</text></svg>">
+<style>
+:root{
+  --bg:#0d0e12; --bg2:#14161c; --card:#1a1d25; --card2:#20242e;
+  --border:#2a2f3a; --text:#eef0f4; --muted:#8b93a3; --dim:#5c6370;
+  --accent:#e8b84b; --accent2:#f5d078; --red:#d94f5c; --green:#4bc98a;
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:40px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{padding:28px 0 8px;text-align:center}
+.logo{font-size:30px;font-weight:800;letter-spacing:4px}
+.logo .suit{color:var(--accent)}
+.tagline{color:var(--muted);font-size:13px;margin-top:4px;letter-spacing:.5px}
+
+/* Progress hero */
+.hero{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:var(--r);padding:20px;margin:20px 0}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rank{display:flex;align-items:center;gap:12px}
+.rank-icon{width:48px;height:48px;border-radius:14px;background:rgba(232,184,75,.12);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.rank-name{font-weight:700;font-size:17px}
+.rank-sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+.hero-pct{font-size:26px;font-weight:800;color:var(--accent);text-align:right;line-height:1}
+.hero-pct small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:4px;letter-spacing:.5px}
+.bar{height:10px;background:var(--bg);border-radius:6px;margin-top:16px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.hero-stats{display:flex;gap:8px;margin-top:16px}
+.hstat{flex:1;background:var(--bg);border-radius:12px;padding:10px 8px;text-align:center}
+.hstat b{display:block;font-size:17px;font-weight:700}
+.hstat span{font-size:11px;color:var(--muted);letter-spacing:.3px}
+
+/* Level sections */
+.level{margin:28px 0 8px}
+.level-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.level-badge{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.lv1 .level-badge{background:rgba(75,201,138,.15);color:var(--green)}
+.lv2 .level-badge{background:rgba(232,184,75,.15);color:var(--accent)}
+.lv3 .level-badge{background:rgba(217,79,92,.15);color:var(--red)}
+.level-title{font-weight:700;font-size:17px}
+.level-sub{color:var(--muted);font-size:12.5px;margin-left:auto;white-space:nowrap}
+
+/* Lesson cards */
+.lesson{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:transform .12s,border-color .2s;user-select:none}
+.lesson:active{transform:scale(.985)}
+.lesson.done{border-color:rgba(75,201,138,.4)}
+.l-num{width:42px;height:42px;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:var(--muted);flex-shrink:0}
+.lesson.done .l-num{background:rgba(75,201,138,.15);color:var(--green)}
+.l-body{flex:1;min-width:0}
+.l-title{font-weight:600;font-size:15px;line-height:1.3}
+.l-meta{display:flex;align-items:center;gap:8px;margin-top:5px;color:var(--muted);font-size:12px}
+.tag{background:var(--card2);border-radius:6px;padding:2px 7px;font-size:11px}
+.lesson.done .l-check{color:var(--green)}
+.l-check{color:var(--dim);font-size:20px;flex-shrink:0}
+
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(5,6,9,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:50;display:none;overflow-y:auto;overscroll-behavior:contain}
+.overlay.open{display:block}
+.modal{max-width:720px;margin:0 auto;min-height:100%;background:var(--bg2);padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.m-head{position:sticky;top:0;background:var(--bg2);z-index:5;display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.m-back{width:38px;height:38px;border-radius:11px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.m-title{font-weight:700;font-size:16px;line-height:1.25}
+.video{position:relative;padding-top:56.25%;background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.m-body{padding:18px 16px}
+.m-section{font-weight:700;font-size:14px;letter-spacing:.8px;color:var(--accent);text-transform:uppercase;margin:20px 0 10px}
+.m-section:first-child{margin-top:0}
+.m-desc{color:var(--muted);font-size:14.5px;line-height:1.55}
+.steps{list-style:none}
+.steps li{display:flex;gap:11px;padding:9px 0;font-size:14.5px;line-height:1.5;border-bottom:1px solid rgba(42,47,58,.5)}
+.steps li:last-child{border:none}
+.steps .n{width:24px;height:24px;border-radius:8px;background:var(--card);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.m-done{width:100%;margin-top:22px;padding:15px;border-radius:14px;border:none;font-size:15.5px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#1a1405;transition:opacity .2s}
+.m-done.is-done{background:var(--card);color:var(--green);border:1px solid rgba(75,201,138,.4)}
+.yt-link{display:block;text-align:center;margin-top:12px;color:var(--muted);font-size:13px;text-decoration:none}
+.yt-link:active{color:var(--text)}
+
+footer{text-align:center;color:var(--dim);font-size:12px;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo"><span class="suit">♠</span> FOKUS <span class="suit">♥</span></div>
+    <div class="tagline">Карточные фокусы с нуля · личный курс</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-top">
+      <div class="rank">
+        <div class="rank-icon" id="rankIcon">🎩</div>
+        <div>
+          <div class="rank-name" id="rankName">Новичок</div>
+          <div class="rank-sub" id="rankSub">Начни с первого урока</div>
+        </div>
+      </div>
+      <div class="hero-pct"><span id="pct">0%</span><small>ПРОГРЕСС</small></div>
+    </div>
+    <div class="bar"><i id="barFill" style="width:0%"></i></div>
+    <div class="hero-stats">
+      <div class="hstat"><b id="stDone">0</b><span>освоено</span></div>
+      <div class="hstat"><b id="stLeft">12</b><span>осталось</span></div>
+      <div class="hstat"><b id="stLevel">1</b><span>уровень</span></div>
+    </div>
+  </div>
+
+  <div id="levels"></div>
+
+  <footer>FOKUS · только для себя · прогресс хранится в этом браузере</footer>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="m-head">
+      <button class="m-back" id="btnBack">←</button>
+      <div class="m-title" id="mTitle"></div>
+    </div>
+    <div class="video" id="mVideo"></div>
+    <div class="m-body">
+      <div class="m-section">О чём урок</div>
+      <p class="m-desc" id="mDesc"></p>
+      <div class="m-section">Шаги отработки</div>
+      <ol class="steps" id="mSteps"></ol>
+      <button class="m-done" id="btnDone"></button>
+      <a class="yt-link" id="ytLink" target="_blank" rel="noopener">Открыть видео на YouTube ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const LESSONS=[
+ // ===== Уровень 1 — База =====
+ {id:"shuffles",lv:1,title:"Тасовки и подснятия фокусника",time:"~15 мин",skill:"техника",yt:"ihyvziYrGj8",
+  desc:"Фундамент всего: ровная тасовка внахлёст (overhand), riffle и подснятия. Пока руки не держат колоду уверенно — любой фокус выдаёт себя.",
+  steps:["Отработай хват: колода лежит в ладони, указательный палец на коротком ребре","Overhand-тасовка: 20 раз подряд медленно, без рассыпания","Riffle на столе: дели колоду ровно пополам","Подснятие одной рукой — только после того, как обычное идёт без запинок","Финальный тест: минута тасовок, не глядя на руки"]},
+ {id:"fan",lv:1,title:"Карточный веер",time:"~10 мин",skill:"техника",yt:"RAWcsrhCuXs",
+  desc:"Веер большим пальцем — первый визуальный приём. Нужен в половине фокусов: красиво дать зрителю выбрать карту.",
+  steps:["Новая или гибкая колода — на убитой веер не выйдет","Большой палец ведёт по дуге, остальные держат упор","Сначала добивайся полного круга из 52 карт","Закрытие веера одним движением","Тест: 5 ровных вееров подряд"]},
+ {id:"trick5min",lv:1,title:"Первый фокус за 5 минут",time:"~10 мин",skill:"фокус",yt:"52RIMhSSpFM",
+  desc:"Простейший эффект без ловкости рук — сразу есть что показать. Учит главному: уверенной подаче.",
+  steps:["Посмотри видео целиком, потом повтори с колодой в руках","Проговори текст вслух — что говоришь зрителю на каждом шаге","Покажи сам себе на камеру телефона","Посмотри запись: где взгляд выдаёт секрет?","Покажи одному человеку"]},
+ {id:"noskill",lv:1,title:"Фокус без подготовки и ловкости рук",time:"~10 мин",skill:"фокус",yt:"xbbRC13-4ZA",
+  desc:"Фокус, который можно показать с любой чужой колодой в любой момент. Работает на простом принципе, а не на технике.",
+  steps:["Разбери принцип: почему фокус работает всегда","Повтори 3 раза подряд без ошибок","Придумай свою подводку — зачем зритель выбирает карту","Тест на камеру","Показ другу"]},
+
+ // ===== Уровень 2 — Контроль =====
+ {id:"control1",lv:2,title:"Простой контроль карты",time:"~20 мин",skill:"техника",yt:"SX6BuizlJ1o",
+  desc:"Главный секрет карточной магии: зритель кладёт карту в середину, а она оказывается наверху. Открывает дорогу к десяткам фокусов.",
+  steps:["Медленно разбери механику движения по видео","Отработка без зрителя: 30 повторов, глядя в зеркало","Движение должно выглядеть как обычное выравнивание колоды","Соедини: выбор карты → возврат → контроль → показ","Тест: наверху ли карта 10 раз из 10?"]},
+ {id:"control2",lv:2,title:"Быстрый контроль карты",time:"~15 мин",skill:"техника",yt:"kT6g5Kh2ZNc",
+  desc:"Второй способ контроля — быстрее и наглее. Два разных контроля позволяют не повторяться перед одним зрителем.",
+  steps:["Сравни с первым контролем: когда какой удобнее","50 медленных повторов","Разгоняй темп только когда движение чистое","Чередуй оба контроля в одной сессии","Покажи фокус «найди карту» через этот контроль"]},
+ {id:"easyeffect",lv:2,title:"Эффектный фокус для новичка",time:"~15 мин",skill:"фокус",yt:"ef97INK3idQ",
+  desc:"Зритель прячет карту в центр колоды — ты её находишь. Классика, собранная из уже освоенных навыков.",
+  steps:["Повтори фокус по видео с паузами","Добавь свой контроль карты из прошлых уроков","Отработай финал: раскрытие должно быть паузой-ударом","Запись на камеру + разбор ошибок","Показ зрителю"]},
+ {id:"best3",lv:2,title:"3 фокуса в один вечер",time:"~25 мин",skill:"фокус",yt:"2cxdUCWORKQ",
+  desc:"Мини-выступление из трёх фокусов подряд. Учит строить программу: разогрев → основной эффект → финал.",
+  steps:["Выучи все три по отдельности","Определи порядок: лёгкий → средний → самый сильный","Прогони связки — переходы между фокусами без пауз","Полный прогон на камеру","Выступление на 1–2 зрителей"]},
+
+ // ===== Уровень 3 — Ловкость =====
+ {id:"doublelift",lv:3,title:"Double Lift — двойной подъём",time:"~30 мин",skill:"техника",yt:"o8IC-mo3LnQ",
+  desc:"Король приёмов: показываешь одну карту, а в руке — две. Основа половины сильных фокусов мира. Видео на английском — смотри руки, там всё понятно.",
+  steps:["Сначала научись брать брейк (зазор) под двумя картами мизинцем","Переворот двух карт как одной — на колоде","Звук и темп — как у обычного переворота одной карты","100 повторов перед зеркалом (серьёзно)","Тест: сними на камеру крупно — видно ли вторую карту?"]},
+ {id:"control3",lv:3,title:"Контроль, обманывающий фокусников",time:"~25 мин",skill:"техника",yt:"Y-cw6YffsyM",
+  desc:"Продвинутый контроль, который не ловят даже те, кто знает базовые. Для зрителей, которые «всё знают».",
+  steps:["Освежи оба базовых контроля — этот строится на их логике","Медленный разбор по видео, по кадрам","40 повторов в зеркало","Соедини с double lift в одном фокусе","Финальный тест на камеру"]},
+ {id:"aces",lv:3,title:"Фокус с тузами",time:"~25 мин",skill:"фокус",yt:"bXfwiq7pBEw",
+  desc:"Эффектный фокус с четырьмя тузами — выглядит как магия казино. Собирает воедино контроль и подачу.",
+  steps:["Разбери механику по видео","Отработай каждую фазу отдельно","Собери целиком в медленном темпе","Доведи до боевой скорости","Показ — это твой новый коронный фокус"]},
+ {id:"powerful",lv:3,title:"Мощный финальный фокус",time:"~20 мин",skill:"фокус",yt:"3KR9owjyRO0",
+  desc:"Сильный эффект для финала выступления. После него — поклон. Курс пройден: дальше Card College и собственные программы.",
+  steps:["Выучи фокус по видео","Собери программу: 3–4 лучших фокуса курса + этот финалом","Полный прогон программы на камеру","Выступление перед компанией","🎉 Курс пройден — ты фокусник"]},
+];
+
+const RANKS=[
+ {min:0,icon:"🎩",name:"Новичок",sub:"Начни с первого урока"},
+ {min:3,icon:"🃏",name:"Ученик",sub:"База закладывается"},
+ {min:6,icon:"✨",name:"Любитель",sub:"Уже есть что показать"},
+ {min:9,icon:"🔥",name:"Мастер",sub:"Руки начинают обманывать глаз"},
+ {min:12,icon:"👑",name:"Фокусник",sub:"Курс пройден полностью"},
+];
+const LEVEL_NAMES={1:"База",2:"Контроль",3:"Ловкость"};
+const KEY="fokus_progress_v1";
+
+let done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
+let current=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]))}
+
+function render(){
+  const n=done.size,total=LESSONS.length,pct=Math.round(n/total*100);
+  document.getElementById("pct").textContent=pct+"%";
+  document.getElementById("barFill").style.width=pct+"%";
+  document.getElementById("stDone").textContent=n;
+  document.getElementById("stLeft").textContent=total-n;
+  const rank=[...RANKS].reverse().find(r=>n>=r.min);
+  document.getElementById("rankIcon").textContent=rank.icon;
+  document.getElementById("rankName").textContent=rank.name;
+  document.getElementById("rankSub").textContent=rank.sub;
+  const lvDone=lv=>LESSONS.filter(l=>l.lv===lv&&done.has(l.id)).length;
+  const curLv=[1,2,3].find(lv=>lvDone(lv)<LESSONS.filter(l=>l.lv===lv).length)||3;
+  document.getElementById("stLevel").textContent=curLv;
+
+  const root=document.getElementById("levels");root.innerHTML="";
+  for(const lv of [1,2,3]){
+    const items=LESSONS.filter(l=>l.lv===lv);
+    const sec=document.createElement("div");sec.className="level lv"+lv;
+    sec.innerHTML=`<div class="level-head"><div class="level-badge">${lv}</div><div class="level-title">${LEVEL_NAMES[lv]}</div><div class="level-sub">${lvDone(lv)}/${items.length} пройдено</div></div>`;
+    items.forEach((l,i)=>{
+      const d=done.has(l.id);
+      const el=document.createElement("div");
+      el.className="lesson"+(d?" done":"");
+      el.innerHTML=`<div class="l-num">${d?"✓":String(LESSONS.indexOf(l)+1)}</div>
+        <div class="l-body"><div class="l-title">${l.title}</div>
+        <div class="l-meta"><span class="tag">${l.skill}</span><span>${l.time}</span></div></div>
+        <div class="l-check">${d?"●":"○"}</div>`;
+      el.onclick=()=>open(l);
+      sec.appendChild(el);
+    });
+    root.appendChild(sec);
+  }
+}
+
+function open(l){
+  current=l;
+  document.getElementById("mTitle").textContent=l.title;
+  document.getElementById("mDesc").textContent=l.desc;
+  document.getElementById("mVideo").innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${l.yt}?rel=0&playsinline=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  document.getElementById("ytLink").href="https://www.youtube.com/watch?v="+l.yt;
+  document.getElementById("mSteps").innerHTML=l.steps.map((s,i)=>`<li><span class="n">${i+1}</span><span>${s}</span></li>`).join("");
+  updateDoneBtn();
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function updateDoneBtn(){
+  const b=document.getElementById("btnDone"),d=done.has(current.id);
+  b.textContent=d?"✓ Освоено — нажми, чтобы снять отметку":"Отметить как освоенный";
+  b.className="m-done"+(d?" is-done":"");
+}
+function close(){
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("mVideo").innerHTML="";
+  document.body.style.overflow="";
+  render();
+}
+document.getElementById("btnBack").onclick=close;
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")close()});
+document.getElementById("btnDone").onclick=()=>{
+  done.has(current.id)?done.delete(current.id):done.add(current.id);
+  save();updateDoneBtn();
+};
+render();
+</script>
+</body>
+</html>
