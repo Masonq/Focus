@@ -48,6 +48,7 @@ header{padding:28px 0 8px;text-align:center}
 .lv2 .level-badge{background:rgba(232,184,75,.15);color:var(--accent)}
 .lv3 .level-badge{background:rgba(217,79,92,.15);color:var(--red)}
 .lv4 .level-badge{background:rgba(150,120,255,.15);color:#a98cff}
+.lv5 .level-badge{background:rgba(75,180,230,.15);color:#56b9e8}
 .level-title{font-weight:700;font-size:17px}
 .level-sub{color:var(--muted);font-size:12.5px;margin-left:auto;white-space:nowrap}
 
@@ -110,7 +111,7 @@ footer{text-align:center;color:var(--dim);font-size:12px;margin-top:36px}
     <div class="bar"><i id="barFill" style="width:0%"></i></div>
     <div class="hero-stats">
       <div class="hstat"><b id="stDone">0</b><span>освоено</span></div>
-      <div class="hstat"><b id="stLeft">22</b><span>осталось</span></div>
+      <div class="hstat"><b id="stLeft">28</b><span>осталось</span></div>
       <div class="hstat"><b id="stLevel">1</b><span>уровень</span></div>
     </div>
   </div>
@@ -182,6 +183,26 @@ const LESSONS=[
   desc:"Сильный эффект для финала выступления. После него — поклон. Дальше — уровень «Репертуар»: набор фокусов на все случаи.",
   steps:["Выучи фокус по видео","Собери мини-программу: 3–4 лучших фокуса + этот финалом","Полный прогон программы на камеру","Выступление перед компанией","Переходи к репертуару"]},
 
+ // ===== Уровень 5 — Тренировка рук (показывается после Базы) =====
+ {id:"charlier",lv:5,title:"Charlier Cut — подснятие одной рукой",time:"~15 мин/день",skill:"руки",yt:"9jDYzZm7cQI",
+  desc:"Первый трюк одной рукой и лучший тренажёр пальцев. Колода в одной руке делится и собирается сама — качает именно те мышцы, что нужны для фокусов.",
+  steps:["Разбери позицию пальцев по видео","Первые дни карты будут падать — это норма, тренируйся над кроватью","Доведи до 10 чистых подснятий подряд","Делай обеими руками — слабая рука тоже нужна","Дальше — каждый день по 5 минут фоном, под видео/сериал"]},
+ {id:"dribble",lv:5,title:"Дриббл — водопад карт",time:"~10 мин/день",skill:"руки",yt:"a_3HMsd4LSY",
+  desc:"Карты красиво «стекают» из руки в руку. Развивает контроль давления пальцев — тот самый навык, на котором держатся брейки и double lift.",
+  steps:["Отработай хват и угол по видео","Учись регулировать скорость потока большим пальцем","Ровный поток без комков — главный критерий","Из руки в руку на весу, не над столом","Ежедневно 3–5 минут"]},
+ {id:"sharp5",lv:5,title:"5 трюков шулера",time:"~20 мин/день",skill:"руки",yt:"lnmooab_Av4",
+  desc:"Пять эффектных способов тасовать как шулер. Красиво само по себе и прокачивает руки быстрее любых упражнений.",
+  steps:["Выбери 2 трюка из пяти и доведи их до чистоты","Потом добавляй по одному новому","Отрабатывай стоя — как будешь показывать","Сними руки на камеру и сравни с видео","Неделя ежедневной практики на все пять"]},
+ {id:"injog",lv:5,title:"Пробежка и инджог",time:"~15 мин/день",skill:"руки",yt:"W88uPJaS1RE",
+  desc:"Шулерский приём: при честной с виду тасовке нужная карта остаётся под контролем. Мост между тасовками и настоящей ловкостью рук.",
+  steps:["Пойми механику инджога по видео","Медленные повторы: пробежка → инджог → подснятие","Выступ карты должен быть незаметен зрителю","Соедини с контролем карты из уровня 2","Тест: карта на месте 10 раз из 10"]},
+ {id:"onehand3",lv:5,title:"3 подснятия одной рукой",time:"~20 мин/день",skill:"руки",yt:"Dtkc_oht2X4",
+  desc:"Charlier, Scissor и Revolution Cut — три одноручных подснятия. Видео на английском, всё видно по рукам. После них пальцы готовы к любому приёму курса.",
+  steps:["Сначала добей Charlier до автоматизма","Scissor Cut — учи по кадрам, он резче","Revolution Cut — самый зрелищный, учи последним","Связка из трёх подряд без падений","Это твой «бой с тенью» — крути карты всегда, когда руки свободны"]},
+ {id:"routine",lv:5,title:"Ежедневная рутина 15 минут",time:"15 мин/день",skill:"руки",list:"PL3-hHOoRlYJvsghvG157uXGWgT5SGFpSl",
+  desc:"Ловкость рук растёт не от уроков, а от ежедневности. Собери свою разминку: 5 мин тасовки и веер, 5 мин Charlier и дриббл, 5 мин текущий приём. Плейлист — арсенал трюков на подпитку.",
+  steps:["Носи колоду с собой — тренируйся в очередях и за видео","Разминка каждый день: тасовки → веер → Charlier → дриббл","5 минут — текущий слабый приём (брейк, double lift, контроль)","Раз в неделю снимай руки на камеру и сравнивай с прошлой","Отметь урок освоенным после 7 дней рутины подряд"]},
+
  // ===== Уровень 4 — Репертуар =====
  {id:"guess",lv:4,title:"Угадай карту зрителя",time:"~10 мин",skill:"фокус",yt:"FpaPxO470fg",
   desc:"Зритель берёт любую карту, возвращает в колоду — ты её называешь. Простейшая версия главного сюжета карточной магии.",
@@ -217,13 +238,14 @@ const LESSONS=[
 
 const RANKS=[
  {min:0,icon:"🎩",name:"Новичок",sub:"Начни с первого урока"},
- {min:4,icon:"🃏",name:"Ученик",sub:"База закладывается"},
- {min:8,icon:"✨",name:"Любитель",sub:"Уже есть что показать"},
- {min:12,icon:"🔥",name:"Мастер",sub:"Руки начинают обманывать глаз"},
- {min:17,icon:"🎭",name:"Артист",sub:"Репертуар растёт"},
- {min:22,icon:"👑",name:"Фокусник",sub:"Курс пройден полностью"},
+ {min:5,icon:"🃏",name:"Ученик",sub:"База закладывается"},
+ {min:10,icon:"✨",name:"Любитель",sub:"Уже есть что показать"},
+ {min:15,icon:"🔥",name:"Мастер",sub:"Руки начинают обманывать глаз"},
+ {min:21,icon:"🎭",name:"Артист",sub:"Репертуар растёт"},
+ {min:28,icon:"👑",name:"Фокусник",sub:"Курс пройден полностью"},
 ];
-const LEVEL_NAMES={1:"База",2:"Контроль",3:"Ловкость",4:"Репертуар"};
+const LEVEL_NAMES={1:"База",5:"Тренировка рук",2:"Контроль",3:"Ловкость",4:"Репертуар"};
+const LEVEL_ORDER=[1,5,2,3,4];
 const KEY="fokus_progress_v1";
 
 let done=new Set(JSON.parse(localStorage.getItem(KEY)||"[]"));
@@ -242,19 +264,20 @@ function render(){
   document.getElementById("rankName").textContent=rank.name;
   document.getElementById("rankSub").textContent=rank.sub;
   const lvDone=lv=>LESSONS.filter(l=>l.lv===lv&&done.has(l.id)).length;
-  const curLv=[1,2,3,4].find(lv=>lvDone(lv)<LESSONS.filter(l=>l.lv===lv).length)||4;
-  document.getElementById("stLevel").textContent=curLv;
+  const curLv=LEVEL_ORDER.find(lv=>lvDone(lv)<LESSONS.filter(l=>l.lv===lv).length)||4;
+  document.getElementById("stLevel").textContent=LEVEL_ORDER.indexOf(curLv)+1;
 
   const root=document.getElementById("levels");root.innerHTML="";
-  for(const lv of [1,2,3,4]){
+  let num=0;
+  for(const lv of LEVEL_ORDER){
     const items=LESSONS.filter(l=>l.lv===lv);
     const sec=document.createElement("div");sec.className="level lv"+lv;
-    sec.innerHTML=`<div class="level-head"><div class="level-badge">${lv}</div><div class="level-title">${LEVEL_NAMES[lv]}</div><div class="level-sub">${lvDone(lv)}/${items.length} пройдено</div></div>`;
+    sec.innerHTML=`<div class="level-head"><div class="level-badge">${LEVEL_ORDER.indexOf(lv)+1}</div><div class="level-title">${LEVEL_NAMES[lv]}</div><div class="level-sub">${lvDone(lv)}/${items.length} пройдено</div></div>`;
     items.forEach((l,i)=>{
-      const d=done.has(l.id);
+      const d=done.has(l.id);num++;
       const el=document.createElement("div");
       el.className="lesson"+(d?" done":"");
-      el.innerHTML=`<div class="l-num">${d?"✓":String(LESSONS.indexOf(l)+1)}</div>
+      el.innerHTML=`<div class="l-num">${d?"✓":String(num)}</div>
         <div class="l-body"><div class="l-title">${l.title}</div>
         <div class="l-meta"><span class="tag">${l.skill}</span><span>${l.time}</span></div></div>
         <div class="l-check">${d?"●":"○"}</div>`;
@@ -269,8 +292,9 @@ function open(l){
   current=l;
   document.getElementById("mTitle").textContent=l.title;
   document.getElementById("mDesc").textContent=l.desc;
-  document.getElementById("mVideo").innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${l.yt}?rel=0&playsinline=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-  document.getElementById("ytLink").href="https://www.youtube.com/watch?v="+l.yt;
+  const src=l.list?`https://www.youtube-nocookie.com/embed/videoseries?list=${l.list}&rel=0&playsinline=1`:`https://www.youtube-nocookie.com/embed/${l.yt}?rel=0&playsinline=1`;
+  document.getElementById("mVideo").innerHTML=`<iframe src="${src}" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  document.getElementById("ytLink").href=l.list?"https://www.youtube.com/playlist?list="+l.list:"https://www.youtube.com/watch?v="+l.yt;
   document.getElementById("mSteps").innerHTML=l.steps.map((s,i)=>`<li><span class="n">${i+1}</span><span>${s}</span></li>`).join("");
   updateDoneBtn();
   document.getElementById("overlay").classList.add("open");
